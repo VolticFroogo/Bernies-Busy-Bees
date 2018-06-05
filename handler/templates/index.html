@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Title -->
+        <title>Bernie's Busy Bees</title>
+
+        <!-- Import CSS -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+        <link rel="icon" type="image/png" href="/img/logo.png">
+        <link rel="stylesheet" type="text/css" href="/css/login.css">
+
+        {{ template "global-meta" . }}
+    </head>
+
+    <body>
+        <!-- Particles Animation -->
+        <div id="particles-js"></div>
+
+        <div class="container">
+            <br><br>
+            <div class="col s12 white center" style="position: relative; border-radius: 10px; padding: 0 0 10px 0;">
+                <span style="font-weight: 300; font-size: 3em;">Bernie's Busy Bees</span><br><br>
+                <div class="container">
+                    <span class="flow-text">I provide childcare in Newcastle-under-Lyme. Here you can see the latest activities that we have got up to. If you want to login <a href="/panel">click here</a>.</span>
+                </div>
+            </div>
+            <br><br>
+            <div class="row">
+                {{ range .Posts }}<div class="col s12 l4">
+                    <div class="card hoverable">
+                        <div class="card-image waves-effect waves-block waves-light">
+                            <img class="activator" src="https://s.froogo.co.uk/Static/berniesbusybees.co.uk/img/{{ index .Images 0 }}">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title activator grey-text text-darken-4">{{ .Title }}<i class="material-icons right">more_vert</i></span>
+                        </div>
+                        <div class="card-reveal">
+                            <span class="card-title grey-text text-darken-4">{{ .Title }}<i class="material-icons right">close</i></span>
+                            <p>{{ .Description }}</p>
+                        </div>
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+
+        <!-- Import JavaScript -->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+        <script type="text/javascript" src="/js/particles.min.js"></script>
+        <script type="text/javascript" src="/js/last-page.js?v1"></script>
+    </body>
+</html>

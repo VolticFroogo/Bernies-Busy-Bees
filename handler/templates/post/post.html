@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Title -->
+        <title>BBB | {{ .Post.Title }}</title>
+
+        {{ template "global-css" . }}
+        <link rel="stylesheet" type="text/css" href="/css/post.css">
+
+        {{ template "global-meta" . }}
+
+        {{ template "global-js" . }}
+        <script> // Give JavaScript some necessary variables from the server.
+            var PostID = {{ .Post.ID }}; // The ID of the post we're on right now.
+            var UnixTime = {{ .UnixTime }}; // Keep time relative to the server.
+            var Fname = "{{ .User.Fname }}";
+            var Lname = "{{ .User.Lname }}"; // The user's name.
+        </script>
+        <script type="text/javascript" src="/js/post.js?v79"></script>
+    </head>
+
+    <body>
+        {{ template "navbar" . }}
+        
+        <div class="container">
+            <br>
+            <a class="waves-effect waves-light btn-large purple darken-3 back-btn"><i class="material-icons left">arrow_back</i>Back</a>
+
+            <h2 id="title" {{ if (eq .User.Priv 3) }}contenteditable="true"{{ else if (eq .User.Priv 2) }}contenteditable="true"{{ end }}>{{ .Post.Title }}</h2>
+            <p id="description" style="font-size: 130%;" {{ if (eq .User.Priv 3) }}contenteditable="true"{{ else if (eq .User.Priv 2) }}contenteditable="true"{{ end }}>{{ .Post.Description }}</p>
+            <div class="row images">
+                {{ range .Post.Images }}<div class="col s12 m6 l4">
+                    <img class="materialboxed image" src="https://s.froogo.co.uk/Static/berniesbusybees.co.uk/img/{{ . }}" data-caption="{{ $.Post.Title }}">
+                </div>
+                {{ end }}
+            </div>
+
+            <div class="row" id="comment-section">
+                <div class="input-field col s12">
+                    <textarea id="comment-textarea" class="materialize-textarea" data-length="256" maxlength="256"></textarea>
+                    <label for="comment-textarea">Comment</label>
+                    <a class="waves-effect waves-light btn purple darken-3" id="comment-btn"><i class="material-icons left">comment</i>Comment</a>
+                </div>
+                {{ range .Post.Comments }}<div class="col s12 comment">
+                    <div class="card-panel grey lighten-5 z-depth-1 hoverable">
+                        <div style="font-size: 140%;">{{ .User.Fname }} {{ .User.Lname }}</div>
+                        <span><script type="text/javascript">document.write(TimeAgo(UnixTime, {{ .Timestamp }}));</script></span>
+                        <p>{{ .Comment }}</p> 
+                        {{ if (eq $.User.UUID .User.UUID) }}<a class="delete-comment-btn btn-floating waves-effect waves-light red right" style="top: -30px; right: -5px;" data-id="{{ .ID }}"><i class="material-icons">delete</i></a>
+                        {{ else if (or (eq $.User.Priv 2) (eq $.User.Priv 3)) }}<a class="delete-comment-btn btn-floating waves-effect waves-light red right" style="top: -30px; right: -5px;" data-id="{{ .ID }}"><i class="material-icons">delete</i></a>
+                        {{ end }}
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+            {{ if (eq .User.Priv 3) }}<div class="fixed-action-btn">
+                <a id="delete-btn" class="btn-floating btn-large red tooltipped" href="/panel/post/new" data-position="left" data-delay="50" data-tooltip="Delete this post.">
+                    <i class="large material-icons">delete</i>
+                </a>
+            </div>{{ end }}
+        </div>
+    </body>
+</html>

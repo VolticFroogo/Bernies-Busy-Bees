@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Title -->
+        <title>BBB | New Post</title>
+
+        <!-- Import CSS -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+
+        <!-- Meta Tags -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+        <!-- Import JavaScript -->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+        <script> // Give JavaScript some necessary variables from the server.
+            var CsrfSecret = "{{ .CsrfSecret }}"; // The CsrfSecret for authentication.
+            var PostID = {{ .Post.ID }}; // The ID of the post we're on right now.
+            var UnixTime = {{ .UnixTime }}; // Keep time relative to the server.
+
+            var Fname = "{{ .User.Fname }}"; var Lname = "{{ .User.Lname }}"; // The user's name.
+        </script>
+        <script type="text/javascript" src="/js/post-new.js?v6"></script>
+    </head>
+
+    <body>
+        {{ template "navbar" . }}
+        
+        <div class="container">
+            <br>
+
+            <div class="row">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea class="materialize-textarea" id="title" name="title" data-length="128" maxlength="128"></textarea>
+                            <label for="title">Title</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <textarea class="materialize-textarea" id="description" name="description" data-length="2048" maxlength="2048"></textarea>
+                            <label for="description">Description</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <a class="btn-large waves-effect waves-light thumbnail-btn">Add Thumbnail<i class="material-icons right">add_a_photo</i></a>
+                            <input hidden class="thumbnail" name="thumbnail" type="file" accept="image/x-png,image/gif,image/jpeg">
+                        </div>
+                        <div class="input-field col s12">
+                            <a class="btn-large waves-effect waves-light images-btn">Add Images<i class="material-icons right">add_a_photo</i></a>
+                            <input hidden class="images" name="images" type="file" multiple accept="image/x-png,image/gif,image/jpeg">
+                        </div>
+                        <div class="input-field col s12">
+                            <a class="btn-large waves-effect waves-light submit-btn">Submit<i class="material-icons right">send</i></a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
