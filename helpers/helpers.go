@@ -7,6 +7,7 @@ import (
 	"math/rand"
 	"net/http"
 
+	"github.com/badoux/checkmail"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -69,5 +70,16 @@ func SuccessResponse(valid bool, w http.ResponseWriter, r *http.Request) {
 		ThrowErr(w, r, "Sending success response error: %v", err)
 	}
 	w.Write(resEnc) // Write JSON data to response writer.
+	return
+}
+
+// CheckEmail checks if an email is valid.
+func CheckEmail(email string) (err error) {
+	err = checkmail.ValidateFormat(email)
+	if err != nil {
+		return
+	}
+
+	err = checkmail.ValidateHost(email)
 	return
 }
